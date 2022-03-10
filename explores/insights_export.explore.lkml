@@ -1,7 +1,7 @@
 include: "/views/insights_export.view.lkml"
 # Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
 explore: insights_export {
-  hidden: yes
+  #hidden: yes
 
   join: insights_export__target_resources {
     view_label: "Insights Export: Target Resources"
