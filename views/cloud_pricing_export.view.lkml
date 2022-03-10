@@ -1,6 +1,15 @@
+
+# The name of this view in Looker is "Cloud Pricing Export"
 view: cloud_pricing_export {
+  # The sql_table_name parameter indicates the underlying database table
+  # to be used for all fields in this view.
   sql_table_name: `bytecode-looker-data-source.gcp_billing.cloud_pricing_export`
     ;;
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: _partitiondate {
     type: time
@@ -31,6 +40,10 @@ view: cloud_pricing_export {
     datatype: date
     sql: ${TABLE}._PARTITIONTIME ;;
   }
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Account Currency Code" in Explore.
 
   dimension: account_currency_code {
     type: string
@@ -78,6 +91,20 @@ view: cloud_pricing_export {
     group_item_label: "Discount Percent"
   }
 
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  measure: total_billing_account_price__price_info__discount_percent {
+    type: sum
+    sql: ${billing_account_price__price_info__discount_percent} ;;
+  }
+
+  measure: average_billing_account_price__price_info__discount_percent {
+    type: average
+    sql: ${billing_account_price__price_info__discount_percent} ;;
+  }
+
   dimension_group: billing_account_price__price_info__discount_percent_fixed {
     type: time
     description: "For pricing that is anchored to a specific date, the date used."
@@ -101,6 +128,9 @@ view: cloud_pricing_export {
     group_label: "Billing Account Price Price Info"
     group_item_label: "Price Reason"
   }
+
+  # This field is hidden, which means it will not show up in Explore.
+  # If you want this field to be displayed, remove "hidden: yes".
 
   dimension: billing_account_price__tiered_rates {
     hidden: yes
@@ -253,7 +283,15 @@ view: cloud_pricing_export {
   }
 }
 
+# The name of this view in Looker is "Cloud Pricing Export Product Taxonomy"
 view: cloud_pricing_export__product_taxonomy {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Cloud Pricing Export Product Taxonomy" in Explore.
+
   dimension: cloud_pricing_export__product_taxonomy {
     type: string
     description: "List of product categories that apply to the SKU."
@@ -261,7 +299,15 @@ view: cloud_pricing_export__product_taxonomy {
   }
 }
 
+# The name of this view in Looker is "Cloud Pricing Export Geo Taxonomy Regions"
 view: cloud_pricing_export__geo_taxonomy__regions {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Cloud Pricing Export Geo Taxonomy Regions" in Explore.
+
   dimension: cloud_pricing_export__geo_taxonomy__regions {
     type: string
     description: "The GCP regions associated with the SKU."
@@ -269,13 +315,35 @@ view: cloud_pricing_export__geo_taxonomy__regions {
   }
 }
 
+# The name of this view in Looker is "Cloud Pricing Export List Price Tiered Rates"
 view: cloud_pricing_export__list_price__tiered_rates {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Account Currency Amount" in Explore.
+
   dimension: account_currency_amount {
     type: number
     description: "The converted price, for the SKU, in the currency the Cloud Billing Account is
     configured to use. The conversion rate will be the one that is or was effective
     on the `pricing_as_of_time`."
     sql: ${TABLE}.account_currency_amount ;;
+  }
+
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  measure: total_account_currency_amount {
+    type: sum
+    sql: ${account_currency_amount} ;;
+  }
+
+  measure: average_account_currency_amount {
+    type: average
+    sql: ${account_currency_amount} ;;
   }
 
   dimension: pricing_unit_quantity {
@@ -297,7 +365,15 @@ view: cloud_pricing_export__list_price__tiered_rates {
   }
 }
 
+# The name of this view in Looker is "Cloud Pricing Export SKU Destination Migration Mappings"
 view: cloud_pricing_export__sku__destination_migration_mappings {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Cloud Pricing Export SKU Destination Migration Mappings" in Explore.
+
   dimension: cloud_pricing_export__sku__destination_migration_mappings {
     type: string
     description: "The destination SKU(s) names which this SKU is being migrated to."
@@ -305,13 +381,36 @@ view: cloud_pricing_export__sku__destination_migration_mappings {
   }
 }
 
+# The name of this view in Looker is "Cloud Pricing Export Billing Account Price Tiered Rates"
 view: cloud_pricing_export__billing_account_price__tiered_rates {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Account Currency Amount" in Explore.
+
   dimension: account_currency_amount {
     type: number
     description: "The converted price, for the SKU, in the currency the Cloud Billing Account is
     configured to use. The conversion rate will be the one that is or was effective
     on the `pricing_as_of_time`."
     sql: ${TABLE}.account_currency_amount ;;
+  }
+
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  measure: total_account_currency_amount {
+    type: sum
+    sql: ${account_currency_amount} ;;
+  }
+
+  measure: average_account_currency_amount {
+    type: average
+    sql: ${account_currency_amount} ;;
+
   }
 
   dimension: pricing_unit_quantity {

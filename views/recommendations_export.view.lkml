@@ -21,9 +21,17 @@ explore: recommendations_export {
   }
 }
 
+# The name of this view in Looker is "Recommendations Export"
 view: recommendations_export {
+  # The sql_table_name parameter indicates the underlying database table
+  # to be used for all fields in this view.
   sql_table_name: `bytecode-looker-data-source.gcp_billing.recommendations_export`
     ;;
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: _partitiondate {
     type: time
@@ -55,12 +63,19 @@ view: recommendations_export {
     sql: ${TABLE}._PARTITIONTIME ;;
   }
 
+  # This field is hidden, which means it will not show up in Explore.
+  # If you want this field to be displayed, remove "hidden: yes".
+
   dimension: ancestors__folder_ids {
     hidden: yes
     sql: ${TABLE}.ancestors.folder_ids ;;
     group_label: "Ancestors"
     group_item_label: "Folder Ids"
   }
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Ancestors Organization ID" in Explore.
 
   dimension: ancestors__organization_id {
     type: string
@@ -158,6 +173,20 @@ view: recommendations_export {
     sql: ${TABLE}.primary_impact.cost_projection.cost.nanos ;;
     group_label: "Primary Impact Cost Projection Cost"
     group_item_label: "Nanos"
+  }
+
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  measure: total_primary_impact__cost_projection__cost__nanos {
+    type: sum
+    sql: ${primary_impact__cost_projection__cost__nanos} ;;
+  }
+
+  measure: average_primary_impact__cost_projection__cost__nanos {
+    type: average
+    sql: ${primary_impact__cost_projection__cost__nanos} ;;
   }
 
   dimension: primary_impact__cost_projection__cost__units {
@@ -270,7 +299,15 @@ view: recommendations_export {
   }
 }
 
+# The name of this view in Looker is "Recommendations Export Target Resources"
 view: recommendations_export__target_resources {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Recommendations Export Target Resources" in Explore.
+
   dimension: recommendations_export__target_resources {
     type: string
     description: "Contains the fully qualified resource names for resources changed by the
@@ -280,7 +317,15 @@ view: recommendations_export__target_resources {
   }
 }
 
+# The name of this view in Looker is "Recommendations Export Associated Insights"
 view: recommendations_export__associated_insights {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Recommendations Export Associated Insights" in Explore.
+
   dimension: recommendations_export__associated_insights {
     type: string
     description: "Insights associated with this recommendation. A project insight is represented as
@@ -289,7 +334,9 @@ view: recommendations_export__associated_insights {
   }
 }
 
+# The name of this view in Looker is "Recommendations Export Ancestors Folder Ids"
 view: recommendations_export__ancestors__folder_ids {
+
   dimension: recommendations_export__ancestors__folder_ids {
     type: string
     description: "Up to 5 levels of parent folders for the recommendation project"

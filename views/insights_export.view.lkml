@@ -1,29 +1,15 @@
-# Un-hide and use this explore, or copy the joins into another explore, to get all the fully nested relationships from this view
-explore: insights_export {
-  hidden: yes
 
-  join: insights_export__target_resources {
-    view_label: "Insights Export: Target Resources"
-    sql: LEFT JOIN UNNEST(${insights_export.target_resources}) as insights_export__target_resources ;;
-    relationship: one_to_many
-  }
-
-  join: insights_export__ancestors__folder_ids {
-    view_label: "Insights Export: Ancestors Folder Ids"
-    sql: LEFT JOIN UNNEST(${insights_export.ancestors__folder_ids}) as insights_export__ancestors__folder_ids ;;
-    relationship: one_to_many
-  }
-
-  join: insights_export__associated_recommendations {
-    view_label: "Insights Export: Associated Recommendations"
-    sql: LEFT JOIN UNNEST(${insights_export.associated_recommendations}) as insights_export__associated_recommendations ;;
-    relationship: one_to_many
-  }
-}
-
+# The name of this view in Looker is "Insights Export"
 view: insights_export {
+  # The sql_table_name parameter indicates the underlying database table
+  # to be used for all fields in this view.
   sql_table_name: `bytecode-looker-data-source.gcp_billing.insights_export`
     ;;
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: _partitiondate {
     type: time
@@ -55,12 +41,19 @@ view: insights_export {
     sql: ${TABLE}._PARTITIONTIME ;;
   }
 
+  # This field is hidden, which means it will not show up in Explore.
+  # If you want this field to be displayed, remove "hidden: yes".
+
   dimension: ancestors__folder_ids {
     hidden: yes
     sql: ${TABLE}.ancestors.folder_ids ;;
     group_label: "Ancestors"
     group_item_label: "Folder Ids"
   }
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Ancestors Organization ID" in Explore.
 
   dimension: ancestors__organization_id {
     type: string
@@ -229,7 +222,15 @@ view: insights_export {
   }
 }
 
+# The name of this view in Looker is "Insights Export Target Resources"
 view: insights_export__target_resources {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Insights Export Target Resources" in Explore.
+
   dimension: insights_export__target_resources {
     type: string
     description: "Contains the fully qualified resource names for resources changed by the
@@ -239,7 +240,15 @@ view: insights_export__target_resources {
   }
 }
 
+# The name of this view in Looker is "Insights Export Ancestors Folder Ids"
 view: insights_export__ancestors__folder_ids {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Insights Export Ancestors Folder Ids" in Explore.
+
   dimension: insights_export__ancestors__folder_ids {
     type: string
     description: "Up to 5 levels of parent folders for the recommendation project"
@@ -247,7 +256,16 @@ view: insights_export__ancestors__folder_ids {
   }
 }
 
+# The name of this view in Looker is "Insights Export Associated Recommendations"
 view: insights_export__associated_recommendations {
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Insights Export Associated Recommendations" in Explore.
+
+
   dimension: insights_export__associated_recommendations {
     type: string
     description: "Insights associated with this recommendation. A project insight is represented as

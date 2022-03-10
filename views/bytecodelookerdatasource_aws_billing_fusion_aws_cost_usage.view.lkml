@@ -1,6 +1,15 @@
+
+# The name of this view in Looker is "Bytecodelookerdatasource Aws Billing Fusion Aws Cost Usage"
 view: bytecodelookerdatasource_aws_billing_fusion_aws_cost_usage {
+  # The sql_table_name parameter indicates the underlying database table
+  # to be used for all fields in this view.
   sql_table_name: `bytecode-looker-data-source.aws_billing_fusion.aws_cost_usage`
     ;;
+  # No primary key is defined for this view. In order to join this view in an Explore,
+  # define primary_key: yes on a dimension that has no repeated values.
+
+  # Dates and timestamps can be represented in Looker using a dimension group of type: time.
+  # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: _partitiondate {
     type: time
@@ -31,6 +40,10 @@ view: bytecodelookerdatasource_aws_billing_fusion_aws_cost_usage {
     datatype: date
     sql: ${TABLE}._PARTITIONTIME ;;
   }
+
+  # Here's what a typical dimension looks like in LookML.
+  # A dimension is a groupable field that can be used to filter query results.
+  # This dimension will be called "Bill Bill Type" in Explore.
 
   dimension: bill_bill_type {
     type: string
@@ -80,6 +93,21 @@ view: bytecodelookerdatasource_aws_billing_fusion_aws_cost_usage {
   dimension: line_item_blended_cost {
     type: number
     sql: ${TABLE}.line_item_blended_cost ;;
+  }
+
+  # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
+  # measures for this dimension, but you can also add measures of many different aggregates.
+  # Click on the type parameter to see all the options in the Quick Help panel on the right.
+
+  measure: total_line_item_blended_cost {
+    type: sum
+    sql: ${line_item_blended_cost} ;;
+  }
+
+  measure: average_line_item_blended_cost {
+    type: average
+    sql: ${line_item_blended_cost} ;;
+
   }
 
   dimension: line_item_blended_rate {
