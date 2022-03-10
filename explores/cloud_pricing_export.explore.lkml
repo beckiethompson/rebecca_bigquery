@@ -3,7 +3,9 @@ include: "/views/cloud_pricing_export.view.lkml"
 
 
 explore: cloud_pricing_export {
+
   #hidden: yes
+
 
   join: cloud_pricing_export__product_taxonomy {
     view_label: "Cloud Pricing Export: Product Taxonomy"
