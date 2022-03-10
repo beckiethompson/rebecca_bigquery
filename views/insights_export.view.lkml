@@ -1,3 +1,4 @@
+
 # The name of this view in Looker is "Insights Export"
 view: insights_export {
   # The sql_table_name parameter indicates the underlying database table
@@ -263,6 +264,7 @@ view: insights_export__associated_recommendations {
   # Here's what a typical dimension looks like in LookML.
   # A dimension is a groupable field that can be used to filter query results.
   # This dimension will be called "Insights Export Associated Recommendations" in Explore.
+
 
   dimension: insights_export__associated_recommendations {
     type: string

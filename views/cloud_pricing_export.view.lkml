@@ -410,6 +410,7 @@ view: cloud_pricing_export__billing_account_price__tiered_rates {
   measure: average_account_currency_amount {
     type: average
     sql: ${account_currency_amount} ;;
+
   }
 
   dimension: pricing_unit_quantity {

@@ -1,3 +1,4 @@
+
 # The name of this view in Looker is "Aws Cost Usage Dedup"
 view: aws_cost_usage_dedup {
   # The sql_table_name parameter indicates the underlying database table
@@ -73,6 +74,7 @@ view: aws_cost_usage_dedup {
   measure: average_line_item_blended_cost {
     type: average
     sql: ${line_item_blended_cost} ;;
+
   }
 
   dimension: line_item_blended_rate {
