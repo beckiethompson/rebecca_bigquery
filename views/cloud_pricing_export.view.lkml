@@ -12,6 +12,8 @@ view: cloud_pricing_export {
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
   dimension_group: _partitiondate {
+    #Added 6/28
+    label: "Partition"
     type: time
     timeframes: [
       raw,
