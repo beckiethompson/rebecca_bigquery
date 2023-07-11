@@ -23,6 +23,8 @@ view: cohorts {
     sql: ${TABLE}.name ;;
   }
 
+
+
 #RT Added on 7/11/23 During Cardinal Co-Dev
 measure: count_of_cohorts {
   type: count
