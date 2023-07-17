@@ -1,3 +1,4 @@
+
 # The name of this view in Looker is "Bytecodelookerdatasource Aws Billing Aws Cost Usage"
 view: bytecodelookerdatasource_aws_billing_aws_cost_usage {
   # The sql_table_name parameter indicates the underlying database table
@@ -94,6 +95,7 @@ view: bytecodelookerdatasource_aws_billing_aws_cost_usage {
   measure: average_line_item_blended_cost {
     type: average
     sql: ${line_item_blended_cost} ;;
+
   }
 
   dimension: line_item_blended_rate {
