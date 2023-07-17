@@ -8,7 +8,9 @@ explore: insights_export {
   join: insights_export__target_resources {
     view_label: "Insights Export: Target Resources"
     sql: LEFT JOIN UNNEST(${insights_export.target_resources}) as insights_export__target_resources ;;
-    relationship: one_to_one
+
+    relationship: one_to_many
+
   }
 
   join: insights_export__ancestors__folder_ids {
